@@ -3,9 +3,40 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ingredients", "Ingredients", "{F6D6D8C7-3D74-492A-8ECA-80597586357C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonKitchen.Ingredients.Api", "Ingredients\CarbonKitchen.Ingredients.Api\CarbonKitchen.Ingredients.Api\CarbonKitchen.Ingredients.Api.csproj", "{4C1F35D0-0D74-4A45-959B-26BFCAEC6186}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonKitchen.Ingredients.Api.Models", "Ingredients\CarbonKitchen.Ingredients.Api\CarbonKitchen.Ingredients.Api.Models\CarbonKitchen.Ingredients.Api.Models.csproj", "{424F87CF-C8CE-4EBE-9B75-A38713A9EC8C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonKitchen.Ingredients.Api.Tests", "Ingredients\CarbonKitchen.Ingredients.Api\CarbonKitchen.Ingredients.Api.Tests\CarbonKitchen.Ingredients.Api.Tests.csproj", "{402C8459-046B-4ECC-9C8F-E9BB713342BC}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C1F35D0-0D74-4A45-959B-26BFCAEC6186}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C1F35D0-0D74-4A45-959B-26BFCAEC6186}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C1F35D0-0D74-4A45-959B-26BFCAEC6186}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C1F35D0-0D74-4A45-959B-26BFCAEC6186}.Release|Any CPU.Build.0 = Release|Any CPU
+		{424F87CF-C8CE-4EBE-9B75-A38713A9EC8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{424F87CF-C8CE-4EBE-9B75-A38713A9EC8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{424F87CF-C8CE-4EBE-9B75-A38713A9EC8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{424F87CF-C8CE-4EBE-9B75-A38713A9EC8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{402C8459-046B-4ECC-9C8F-E9BB713342BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{402C8459-046B-4ECC-9C8F-E9BB713342BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{402C8459-046B-4ECC-9C8F-E9BB713342BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{402C8459-046B-4ECC-9C8F-E9BB713342BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4C1F35D0-0D74-4A45-959B-26BFCAEC6186} = {F6D6D8C7-3D74-492A-8ECA-80597586357C}
+		{424F87CF-C8CE-4EBE-9B75-A38713A9EC8C} = {F6D6D8C7-3D74-492A-8ECA-80597586357C}
+		{402C8459-046B-4ECC-9C8F-E9BB713342BC} = {F6D6D8C7-3D74-492A-8ECA-80597586357C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {015EFD77-4377-4346-9244-21808B61501C}
