@@ -39,9 +39,9 @@
 
                 ingredientById.Should().BeEquivalentTo(fakeIngredient);
                 ingredientById.IngredientId.Should().Be(fakeIngredient.IngredientId);
-                ingredientById.Ingredient.Should().Be(fakeIngredient.Ingredient);
-                ingredientById.IngredientTextField2.Should().Be(fakeIngredient.IngredientTextField2);
-                ingredientById.IngredientDateField1.Should().Be(fakeIngredient.IngredientDateField1);
+                ingredientById.Name.Should().Be(fakeIngredient.Name);
+                ingredientById.Unit.Should().Be(fakeIngredient.Unit);
+                ingredientById.Amount.Should().Be(fakeIngredient.Amount);
             }
         }
 
@@ -160,13 +160,13 @@
             var sieveOptions = Options.Create(new SieveOptions());
 
             var fakeIngredientOne = new FakeIngredient { }.Generate();
-            fakeIngredientOne.Ingredient = "Bravo";
+            fakeIngredientOne.Name = "Bravo";
 
             var fakeIngredientTwo = new FakeIngredient { }.Generate();
-            fakeIngredientTwo.Ingredient = "Alpha";
+            fakeIngredientTwo.Name = "Alpha";
 
             var fakeIngredientThree = new FakeIngredient { }.Generate();
-            fakeIngredientThree.Ingredient = "Charlie";
+            fakeIngredientThree.Name = "Charlie";
 
             //Act
             using (var context = new IngredientDbContext(dbOptions))
@@ -176,7 +176,7 @@
 
                 var service = new IngredientRepository(context, new SieveProcessor(sieveOptions));
 
-                var ingredientRepo = service.GetIngredients(new IngredientParametersDto { SortOrder = "Ingredient" });
+                var ingredientRepo = service.GetIngredients(new IngredientParametersDto { SortOrder = "Name" });
 
                 //Assert
                 ingredientRepo.Should()
@@ -196,13 +196,13 @@
             var sieveOptions = Options.Create(new SieveOptions());
 
             var fakeIngredientOne = new FakeIngredient { }.Generate();
-            fakeIngredientOne.Ingredient = "Bravo";
+            fakeIngredientOne.Name = "Bravo";
 
             var fakeIngredientTwo = new FakeIngredient { }.Generate();
-            fakeIngredientTwo.Ingredient = "Alpha";
+            fakeIngredientTwo.Name = "Alpha";
 
             var fakeIngredientThree = new FakeIngredient { }.Generate();
-            fakeIngredientThree.Ingredient = "Charlie";
+            fakeIngredientThree.Name = "Charlie";
 
             //Act
             using (var context = new IngredientDbContext(dbOptions))
@@ -212,7 +212,7 @@
 
                 var service = new IngredientRepository(context, new SieveProcessor(sieveOptions));
 
-                var ingredientRepo = service.GetIngredients(new IngredientParametersDto { SortOrder = "-Ingredient" });
+                var ingredientRepo = service.GetIngredients(new IngredientParametersDto { SortOrder = "-Name" });
 
                 //Assert
                 ingredientRepo.Should()
@@ -223,14 +223,14 @@
         }
 
         [Theory]
-        [InlineData("Ingredient == Alpha")]
-        [InlineData("IngredientTextField2 == Bravo")]
+        [InlineData("Name == Alpha")]
+        [InlineData("Unit == Bravo")]
         [InlineData("RecipeId == 5")]
-        [InlineData("Ingredient == Charlie")]
-        [InlineData("IngredientTextField2 == Delta")]
+        [InlineData("Name == Charlie")]
+        [InlineData("Unit == Delta")]
         [InlineData("RecipeId == 6")]
-        [InlineData("Ingredient == Echo")]
-        [InlineData("IngredientTextField2 == Foxtrot")]
+        [InlineData("Name == Echo")]
+        [InlineData("Unit == Foxtrot")]
         [InlineData("RecipeId == 7")]
         public void GetIngredients_FilterListWithExact(string filters)
         {
@@ -241,18 +241,18 @@
             var sieveOptions = Options.Create(new SieveOptions());
 
             var fakeIngredientOne = new FakeIngredient { }.Generate();
-            fakeIngredientOne.Ingredient = "Alpha";
-            fakeIngredientOne.IngredientTextField2 = "Bravo";
+            fakeIngredientOne.Name = "Alpha";
+            fakeIngredientOne.Unit = "Bravo";
             fakeIngredientOne.RecipeId = 5;
 
             var fakeIngredientTwo = new FakeIngredient { }.Generate();
-            fakeIngredientTwo.Ingredient = "Charlie";
-            fakeIngredientTwo.IngredientTextField2 = "Delta";
+            fakeIngredientTwo.Name = "Charlie";
+            fakeIngredientTwo.Unit = "Delta";
             fakeIngredientTwo.RecipeId = 6;
 
             var fakeIngredientThree = new FakeIngredient { }.Generate();
-            fakeIngredientThree.Ingredient = "Echo";
-            fakeIngredientThree.IngredientTextField2 = "Foxtrot";
+            fakeIngredientThree.Name = "Echo";
+            fakeIngredientThree.Unit = "Foxtrot";
             fakeIngredientThree.RecipeId = 7;
 
             //Act
@@ -274,10 +274,10 @@
         }
 
         [Theory]
-        [InlineData("Ingredient@=Hart", 1)]
-        [InlineData("IngredientTextField2@=Fav", 1)]
-        [InlineData("Ingredient@=*hart", 2)]
-        [InlineData("IngredientTextField2@=*fav", 2)]
+        [InlineData("Name@=Hart", 1)]
+        [InlineData("Unit@=Fav", 1)]
+        [InlineData("Name@=*hart", 2)]
+        [InlineData("Unit@=*fav", 2)]
         public void GetIngredients_FilterListWithContains(string filters, int expectedCount)
         {
             //Arrange
@@ -287,16 +287,16 @@
             var sieveOptions = Options.Create(new SieveOptions());
 
             var fakeIngredientOne = new FakeIngredient { }.Generate();
-            fakeIngredientOne.Ingredient = "Alpha";
-            fakeIngredientOne.IngredientTextField2 = "Bravo";
+            fakeIngredientOne.Name = "Alpha";
+            fakeIngredientOne.Unit = "Bravo";
 
             var fakeIngredientTwo = new FakeIngredient { }.Generate();
-            fakeIngredientTwo.Ingredient = "Hartsfield";
-            fakeIngredientTwo.IngredientTextField2 = "Favaro";
+            fakeIngredientTwo.Name = "Hartsfield";
+            fakeIngredientTwo.Unit = "Favaro";
 
             var fakeIngredientThree = new FakeIngredient { }.Generate();
-            fakeIngredientThree.Ingredient = "Bravehart";
-            fakeIngredientThree.IngredientTextField2 = "Jonfav";
+            fakeIngredientThree.Name = "Bravehart";
+            fakeIngredientThree.Unit = "Jonfav";
 
             //Act
             using (var context = new IngredientDbContext(dbOptions))
@@ -329,16 +329,16 @@
             var sieveOptions = Options.Create(new SieveOptions());
 
             var fakeIngredientOne = new FakeIngredient { }.Generate();
-            fakeIngredientOne.Ingredient = "Alpha";
-            fakeIngredientOne.IngredientTextField2 = "Bravo";
+            fakeIngredientOne.Name = "Alpha";
+            fakeIngredientOne.Unit = "Bravo";
 
             var fakeIngredientTwo = new FakeIngredient { }.Generate();
-            fakeIngredientTwo.Ingredient = "Hartsfield";
-            fakeIngredientTwo.IngredientTextField2 = "White";
+            fakeIngredientTwo.Name = "Hartsfield";
+            fakeIngredientTwo.Unit = "White";
 
             var fakeIngredientThree = new FakeIngredient { }.Generate();
-            fakeIngredientThree.Ingredient = "Bravehart";
-            fakeIngredientThree.IngredientTextField2 = "Jonfav";
+            fakeIngredientThree.Name = "Bravehart";
+            fakeIngredientThree.Unit = "Jonfav";
 
             //Act
             using (var context = new IngredientDbContext(dbOptions))

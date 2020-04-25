@@ -68,16 +68,100 @@ namespace CarbonKitchen.Ingredients.Api
             using (var context = app.ApplicationServices.GetService<IngredientDbContext>())
             {
                 context.Database.EnsureCreated();
+                context.Ingredients.Add(new Ingredient {
+                    IngredientId = 1
+                    , RecipeId = 1
+                    , Amount = 1
+                    , Unit = "package"
+                    , Name = "(20 oz) boneless skinless chicken thighs"
+                  });
+                context.Ingredients.Add(new Ingredient { 
+                    IngredientId = 2
+                    , RecipeId = 1
+                    , Amount = 1
+                    , Unit = "teaspoon"
+                    , Name = "salt"
+                  });
+                context.Ingredients.Add(new Ingredient {
+                    IngredientId = 3
+                    , RecipeId = 1
+                    , Amount = .5
+                    , Unit = "teaspoon"
+                    , Name = "pepper"
+                  });
+                context.Ingredients.Add(new Ingredient {
+                    IngredientId = 4
+                    , RecipeId = 1
+                    , Amount = 2
+                    , Unit = "tablespoons"
+                    , Name = "butter"
+                  });
+                context.Ingredients.Add(new Ingredient {
+                    IngredientId = 5
+                    , RecipeId = 1
+                    , Amount = 1
+                    , Unit = "package"
+                    , Name = "(20 oz) boneless skinless chicken thighs"
+                  });
+                context.Ingredients.Add(new Ingredient {
+                    IngredientId = 6
+                    , RecipeId = 1
+                    , Amount = 1
+                    , Unit = "teaspoon"
+                    , Name = "salt"
+                  });
+                context.Ingredients.Add(new Ingredient {
+                    IngredientId = 7
+                    , RecipeId = 1
+                    , Amount = .5
+                    , Unit = "teaspoon"
+                    , Name = "pepper"
+                  });
+                context.Ingredients.Add(new Ingredient {
+                    IngredientId = 8
+                    , RecipeId = 1
+                    , Amount = 2
+                    , Unit = "tablespoons"
+                    , Name = "butter"
+                  });
 
+                context.Ingredients.Add(new Ingredient {
+                    IngredientId = 9
+                    , RecipeId = 1
+                    , Amount = 1
+                    , Unit = "package"
+                    , Name = "(20 oz) boneless skinless chicken thighs"
+                  });
+                context.Ingredients.Add(new Ingredient {
+                    IngredientId = 10
+                    , RecipeId = 1
+                    , Amount = 1
+                    , Unit = "teaspoon"
+                    , Name = "salt"
+                  });
+                context.Ingredients.Add(new Ingredient {
+                    IngredientId = 11
+                    , RecipeId = 1
+                    , Amount = .5
+                    , Unit = "teaspoon"
+                    , Name = "pepper"
+                  });
+                context.Ingredients.Add(new Ingredient {
+                    IngredientId = 12
+                    , RecipeId = 1
+                    , Amount = 2
+                    , Unit = "tablespoons"
+                    , Name = "butter"
+                  });
                 // auto generate some fake data. added rules to accomodate placeholder validation rules
                 context.Ingredients.Add(new AutoFaker<Ingredient>()
-                    .RuleFor(fake => fake.IngredientDateField1, fake => fake.Date.Past())
+                    .RuleFor(fake => fake.Amount, fake => fake.Random.Number())
                     .RuleFor(fake => fake.RecipeId, fake => fake.Random.Number()));
                 context.Ingredients.Add(new AutoFaker<Ingredient>()
-                    .RuleFor(fake => fake.IngredientDateField1, fake => fake.Date.Past())
+                    .RuleFor(fake => fake.Amount, fake => fake.Random.Number())
                     .RuleFor(fake => fake.RecipeId, fake => fake.Random.Number()));
                 context.Ingredients.Add(new AutoFaker<Ingredient>()
-                    .RuleFor(fake => fake.IngredientDateField1, fake => fake.Date.Past())
+                    .RuleFor(fake => fake.Amount, fake => fake.Random.Number())
                     .RuleFor(fake => fake.RecipeId, fake => fake.Random.Number()));
 
                 context.SaveChanges();

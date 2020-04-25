@@ -38,8 +38,8 @@
             if (!string.IsNullOrWhiteSpace(ingredientParameters.QueryString))
             {
                 var QueryString = ingredientParameters.QueryString.Trim();
-                collection = collection.Where(i => i.Ingredient.Contains(QueryString)
-                    || i.IngredientTextField2.Contains(QueryString));
+                collection = collection.Where(i => i.Name.Contains(QueryString)
+                    || i.Unit.Contains(QueryString));
             }
 
             var sieveModel = new SieveModel

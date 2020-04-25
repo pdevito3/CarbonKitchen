@@ -44,9 +44,9 @@
 
                 ingredientById.Should().BeEquivalentTo(fakeIngredient);
                 ingredientById.IngredientId.Should().Be(fakeIngredient.IngredientId);
-                ingredientById.Ingredient.Should().Be(fakeIngredient.Ingredient);
-                ingredientById.IngredientTextField2.Should().Be(fakeIngredient.IngredientTextField2);
-                ingredientById.IngredientDateField1.Should().Be(fakeIngredient.IngredientDateField1);
+                ingredientById.Name.Should().Be(fakeIngredient.Name);
+                ingredientById.Unit.Should().Be(fakeIngredient.Unit);
+                ingredientById.Amount.Should().Be(fakeIngredient.Amount);
             }
         }
     }

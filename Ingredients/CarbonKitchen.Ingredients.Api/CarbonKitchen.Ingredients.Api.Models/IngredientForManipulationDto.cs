@@ -5,8 +5,8 @@
     public class IngredientForManipulationDto
     {
         public int? RecipeId { get; set; }
-        public string Ingredient { get; set; }
-        public string IngredientTextField2 { get; set; }
-        public DateTime? IngredientDateField1 { get; set; }
+        public string Name { get; set; }
+        public string Unit { get; set; }
+        public double? Amount { get; set; }
     }
 }

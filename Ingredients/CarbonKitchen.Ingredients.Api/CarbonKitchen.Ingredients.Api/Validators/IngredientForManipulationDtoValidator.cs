@@ -8,12 +8,11 @@
     {
         public IngredientForManipulationDtoValidator()
         {
-            RuleFor(i => i.Ingredient)
-                .NotEmpty();
+            //RuleFor(i => i.Ingredient);
             RuleFor(i => i.RecipeId)
                 .GreaterThanOrEqualTo(0);
-            RuleFor(i => i.IngredientDateField1)
-                .LessThanOrEqualTo(DateTime.UtcNow);
+            RuleFor(i => i.Amount)
+                .GreaterThanOrEqualTo(0);
         }
     }
 }

@@ -14,19 +14,20 @@
         [Sieve(CanFilter = true, CanSort = true)]
         public int IngredientId { get; set; }
 
-        [Column("IngredientIntField1")]
+        [Column("RecipeId")]
         [Sieve(CanFilter = true, CanSort = true)]
-        public int? IngredientIntField1 { get; set; }
+        public int? RecipeId { get; set; }
 
-        [Column("IngredientTextField1")]
+        [Column("Name")]
         [Sieve(CanFilter = true, CanSort = true)]
-        public string IngredientTextField1 { get; set; }
+        public string Name { get; set; }
 
-        [Column("IngredientTextField2")]
+        [Column("Unit")]
         [Sieve(CanFilter = true, CanSort = true)]
-        public string IngredientTextField2 { get; set; }
+        public string Unit { get; set; }
 
-        [Column("IngredientDateField1")]
-        public DateTime? IngredientDateField1 { get; set; }
+        [Column("Amount")]
+        [Sieve(CanFilter = true, CanSort = true)]
+        public double? Amount { get; set; }
     }
 }
