@@ -11,6 +11,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonKitchen.Ingredients.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonKitchen.Ingredients.Api.Tests", "Ingredients\CarbonKitchen.Ingredients.Api\CarbonKitchen.Ingredients.Api.Tests\CarbonKitchen.Ingredients.Api.Tests.csproj", "{402C8459-046B-4ECC-9C8F-E9BB713342BC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Recipes", "Recipes", "{297BA3D7-9AD0-44E9-9527-A92E33B5F0CB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonKitchen.Recipes.Api", "Recipes\CarbonKitchen.Recipes.Api\CarbonKitchen.Recipes.Api\CarbonKitchen.Recipes.Api.csproj", "{EF12544E-049E-41F7-BFE4-114A5B2EDAA9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonKitchen.Recipes.Api.Models", "Recipes\CarbonKitchen.Recipes.Api\CarbonKitchen.Recipes.Api.Models\CarbonKitchen.Recipes.Api.Models.csproj", "{200EF581-6F7A-4C17-8218-8B100DE39791}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonKitchen.Recipes.Api.Tests", "Recipes\CarbonKitchen.Recipes.Api\CarbonKitchen.Recipes.Api.Tests\CarbonKitchen.Recipes.Api.Tests.csproj", "{2182D9F6-321C-4D3B-9EC1-37CE90C4ADE0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +37,18 @@ Global
 		{402C8459-046B-4ECC-9C8F-E9BB713342BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{402C8459-046B-4ECC-9C8F-E9BB713342BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{402C8459-046B-4ECC-9C8F-E9BB713342BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF12544E-049E-41F7-BFE4-114A5B2EDAA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF12544E-049E-41F7-BFE4-114A5B2EDAA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF12544E-049E-41F7-BFE4-114A5B2EDAA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF12544E-049E-41F7-BFE4-114A5B2EDAA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{200EF581-6F7A-4C17-8218-8B100DE39791}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{200EF581-6F7A-4C17-8218-8B100DE39791}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{200EF581-6F7A-4C17-8218-8B100DE39791}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{200EF581-6F7A-4C17-8218-8B100DE39791}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2182D9F6-321C-4D3B-9EC1-37CE90C4ADE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2182D9F6-321C-4D3B-9EC1-37CE90C4ADE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2182D9F6-321C-4D3B-9EC1-37CE90C4ADE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2182D9F6-321C-4D3B-9EC1-37CE90C4ADE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +57,9 @@ Global
 		{4C1F35D0-0D74-4A45-959B-26BFCAEC6186} = {F6D6D8C7-3D74-492A-8ECA-80597586357C}
 		{424F87CF-C8CE-4EBE-9B75-A38713A9EC8C} = {F6D6D8C7-3D74-492A-8ECA-80597586357C}
 		{402C8459-046B-4ECC-9C8F-E9BB713342BC} = {F6D6D8C7-3D74-492A-8ECA-80597586357C}
+		{EF12544E-049E-41F7-BFE4-114A5B2EDAA9} = {297BA3D7-9AD0-44E9-9527-A92E33B5F0CB}
+		{200EF581-6F7A-4C17-8218-8B100DE39791} = {297BA3D7-9AD0-44E9-9527-A92E33B5F0CB}
+		{2182D9F6-321C-4D3B-9EC1-37CE90C4ADE0} = {297BA3D7-9AD0-44E9-9527-A92E33B5F0CB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {015EFD77-4377-4346-9244-21808B61501C}
