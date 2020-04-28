@@ -112,11 +112,11 @@
                 .Options;
             var sieveOptions = Options.Create(new SieveOptions());
 
+            var deleteId = 1;
             var fakeIngredientOne = new FakeIngredient { }.Generate();
             var fakeIngredientTwo = new FakeIngredient { }.Generate();
             var fakeIngredientThree = new FakeIngredient { }.Generate();
 
-            var deleteId = 1;
             fakeIngredientOne.RecipeId = deleteId;
             fakeIngredientTwo.RecipeId = deleteId;
             fakeIngredientThree.RecipeId = 2;
@@ -125,19 +125,19 @@
             using (var context = new IngredientDbContext(dbOptions))
             {
                 context.Ingredients.AddRange(fakeIngredientOne, fakeIngredientTwo, fakeIngredientThree);
+                context.SaveChanges();
 
                 var service = new IngredientRepository(context, new SieveProcessor(sieveOptions));
 
                 service.DeleteIngredients(deleteId);
-
                 context.SaveChanges();
 
                 //Assert
                 var ingredientList = context.Ingredients.ToList();
 
                 ingredientList.Should().ContainEquivalentOf(fakeIngredientThree);
-                //Assert.DoesNotContain(ingredientList, i => i == fakeIngredientOne);
-                //Assert.DoesNotContain(ingredientList, i => i == fakeIngredientTwo);
+                Assert.DoesNotContain(ingredientList, i => i == fakeIngredientOne);
+                Assert.DoesNotContain(ingredientList, i => i == fakeIngredientTwo);
                 ingredientList.Should().HaveCount(1);
 
                 context.Database.EnsureDeleted();

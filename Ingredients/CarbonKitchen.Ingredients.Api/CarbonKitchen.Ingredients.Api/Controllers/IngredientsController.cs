@@ -123,12 +123,11 @@
             // save and return new one
             _ingredientRepository.Save();
 
-            //var ingredientDto = _mapper.Map<IngredientDto>(ingredient);
-            //return CreatedAtRoute("GetIngredients",
-            //    new { ingredientDto.RecipeId },
-            //    ingredientDto);
-
-            return null;
+            var ingredientDto = _mapper.Map<List<IngredientDto>>(ingredients);
+            return CreatedAtRoute("GetIngredients",
+                1,
+                //new { ingredientDto.RecipeId },
+                ingredientDto);
         }
 
         [HttpDelete("/list/{recipeId}")]
