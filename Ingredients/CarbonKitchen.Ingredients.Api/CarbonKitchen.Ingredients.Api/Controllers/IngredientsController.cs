@@ -117,9 +117,8 @@
             _ingredientRepository.DeleteIngredients(recipeId);
 
             // then add the new one
-            //_ingredientRepository.AddIngredient(ingredientsForCreation);
-            //var ingredient = _mapper.Map<Ingredient>(ingredientForCreation);
-            //_ingredientRepository.AddIngredient(ingredient);
+            var ingredients = _mapper.Map<List<Ingredient>>(ingredientsForCreation);
+            _ingredientRepository.AddIngredients(ingredients);
 
             // save and return new one
             _ingredientRepository.Save();

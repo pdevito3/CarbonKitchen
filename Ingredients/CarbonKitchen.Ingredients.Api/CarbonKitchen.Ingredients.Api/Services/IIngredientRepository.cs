@@ -15,6 +15,7 @@
         Task<Ingredient> GetIngredientAsync(int ingredientId);
         Ingredient GetIngredient(int ingredientId);
         void AddIngredient(Ingredient ingredient);
+        void AddIngredients(List<Ingredient> ingredient);
         void DeleteIngredient(Ingredient ingredient);
 
         //TODO: Update to only use this, not the list

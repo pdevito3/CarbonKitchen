@@ -76,6 +76,15 @@
 
             _context.Ingredients.Add(ingredient);
         }
+        public void AddIngredients(List<Ingredient> ingredients)
+        {
+            if (ingredients == null)
+            {
+                throw new ArgumentNullException(nameof(ingredients));
+            }
+
+            _context.Ingredients.AddRange(ingredients);
+        }
 
         public void DeleteIngredient(Ingredient ingredient)
         {
@@ -95,7 +104,7 @@
         //TODO: Update to get htis working and use this instead of list
         public void DeleteIngredients(int recipeId)
         {
-            var ingredients = _context.Ingredients.Where(i => i.RecipeId == recipeId).ToList<Ingredient>();/**/
+            var ingredients = _context.Ingredients.Where(i => i.RecipeId == recipeId).ToList<Ingredient>();
             _context.Ingredients.RemoveRange(ingredients);
         }
 
