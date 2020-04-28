@@ -357,5 +357,43 @@
                 context.Database.EnsureDeleted();
             }
         }
+
+
+        [Theory]
+        [InlineData(1, 2)]
+        public void GetIngredients_RecipeIdParamReturnsExpectedRecordCount(int recipeId, int expectedCount)
+        {
+            //Arrange
+            var dbOptions = new DbContextOptionsBuilder<IngredientDbContext>()
+                .UseInMemoryDatabase(databaseName: $"IngredientDb{Guid.NewGuid()}")
+                .Options;
+            var sieveOptions = Options.Create(new SieveOptions());
+
+            var fakeIngredientOne = new FakeIngredient { }.Generate();
+            fakeIngredientOne.RecipeId = 1;
+
+            var fakeIngredientTwo = new FakeIngredient { }.Generate();
+            fakeIngredientTwo.RecipeId = 1;
+
+            var fakeIngredientThree = new FakeIngredient { }.Generate();
+            fakeIngredientThree.RecipeId = 2;
+
+            //Act
+            using (var context = new IngredientDbContext(dbOptions))
+            {
+                context.Ingredients.AddRange(fakeIngredientOne, fakeIngredientTwo, fakeIngredientThree);
+                context.SaveChanges();
+
+                var service = new IngredientRepository(context, new SieveProcessor(sieveOptions));
+
+                var ingredientRepo = service.GetIngredients(new IngredientParametersDto { RecipeId = recipeId });
+
+                //Assert
+                ingredientRepo.Should()
+                    .HaveCount(expectedCount);
+
+                context.Database.EnsureDeleted();
+            }
+        }
     }
 }

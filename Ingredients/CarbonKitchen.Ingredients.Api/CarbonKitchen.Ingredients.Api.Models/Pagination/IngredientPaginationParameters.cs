@@ -2,7 +2,7 @@
 {
     public abstract class IngredientPaginationParameters
     {
-        const int maxPageSize = 20;
+        const int maxPageSize = 60;
         public int PageNumber { get; set; } = 1;
 
         private int _pageSize = 10;

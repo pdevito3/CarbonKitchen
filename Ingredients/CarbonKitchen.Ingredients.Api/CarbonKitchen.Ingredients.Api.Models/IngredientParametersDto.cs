@@ -10,5 +10,6 @@ namespace CarbonKitchen.Ingredients.Api.Models
         public string Filters { get; set; }
         public string QueryString { get; set; }
         public string SortOrder { get; set; }
+        public int? RecipeId { get; set; }
     }
 }

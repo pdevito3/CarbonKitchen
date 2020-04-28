@@ -44,6 +44,11 @@
                     || i.Unit.Contains(QueryString));
             }
 
+            if (!string.IsNullOrWhiteSpace(ingredientParameters.RecipeId.ToString()))
+            {
+                collection = collection.Where(i => i.RecipeId.Equals(ingredientParameters.RecipeId));
+            }
+
             var sieveModel = new SieveModel
             {
                 Sorts = ingredientParameters.SortOrder,
