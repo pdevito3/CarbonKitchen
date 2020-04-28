@@ -107,6 +107,40 @@
             return NoContent();
         }
 
+        [HttpPost("list/{recipeId}")]
+        public ActionResult<IngredientDto> AddIngredientList(int recipeId, [FromBody] List<IngredientForCreationDto> ingredientsForCreation)
+        {
+            // delete the previous list
+            /*var parameters = new IngredientParametersDto { Filters = $"RecipeId = {recipeId}", PageSize = 10 };
+            var ingredientsFromRepo = _ingredientRepository.GetIngredients(parameters);*/
+
+            _ingredientRepository.DeleteIngredients(recipeId);
+
+            // then add the new one
+            //_ingredientRepository.AddIngredient(ingredientsForCreation);
+            //var ingredient = _mapper.Map<Ingredient>(ingredientForCreation);
+            //_ingredientRepository.AddIngredient(ingredient);
+
+            // save and return new one
+            _ingredientRepository.Save();
+
+            //var ingredientDto = _mapper.Map<IngredientDto>(ingredient);
+            //return CreatedAtRoute("GetIngredients",
+            //    new { ingredientDto.RecipeId },
+            //    ingredientDto);
+
+            return null;
+        }
+
+        [HttpDelete("/list/{recipeId}")]
+        public ActionResult DeleteIngredientList(int recipeId)
+        {
+            _ingredientRepository.DeleteIngredients(recipeId);
+            _ingredientRepository.Save();
+
+            return NoContent();
+        }
+
         [HttpPut("{ingredientId}")]
         public IActionResult UpdateIngredient(int ingredientId, IngredientForUpdateDto ingredient)
         {

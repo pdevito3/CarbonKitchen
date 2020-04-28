@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Recipes\CarbonKitchen.Recipes.Api\CarbonKitchen.Recipes.Api.Models\CarbonKitchen.Recipes.Api.Models.csproj" />
     <ProjectReference Include="..\CarbonKitchen.Ingredients.Api.Models\CarbonKitchen.Ingredients.Api.Models.csproj" />
     <ProjectReference Include="..\CarbonKitchen.Ingredients.Api\CarbonKitchen.Ingredients.Api.csproj" />
   </ItemGroup>

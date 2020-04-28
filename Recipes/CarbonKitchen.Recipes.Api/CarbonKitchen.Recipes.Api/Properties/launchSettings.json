@@ -11,7 +11,7 @@
   "profiles": {
     "CarbonKitchen.Recipes.Api": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "api/v1/recipes",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

@@ -4,12 +4,14 @@
     using CarbonKitchen.Ingredients.Api.Data.Entities;
     using CarbonKitchen.Ingredients.Api.Models;
     using CarbonKitchen.Ingredients.Api.Models.Pagination;
+    using Microsoft.AspNetCore.Razor.Language.Intermediate;
     using Microsoft.EntityFrameworkCore;
     using Sieve.Models;
     using Sieve.Services;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Cryptography.X509Certificates;
     using System.Threading.Tasks;
 
     public class IngredientRepository : IIngredientRepository
@@ -83,6 +85,18 @@
             }
 
             _context.Ingredients.Remove(ingredient);
+        }
+
+        public void DeleteIngredients(List<Ingredient> ingredients)
+        {
+            _context.Ingredients.RemoveRange(ingredients);
+        }
+
+        //TODO: Update to get htis working and use this instead of list
+        public void DeleteIngredients(int recipeId)
+        {
+            var ingredients = _context.Ingredients.Where(i => i.RecipeId == recipeId).ToList<Ingredient>();/**/
+            _context.Ingredients.RemoveRange(ingredients);
         }
 
         public void UpdateIngredient(Ingredient ingredient)

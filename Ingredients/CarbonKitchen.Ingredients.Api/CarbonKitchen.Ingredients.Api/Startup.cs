@@ -156,13 +156,13 @@ namespace CarbonKitchen.Ingredients.Api
                 // auto generate some fake data. added rules to accomodate placeholder validation rules
                 context.Ingredients.Add(new AutoFaker<Ingredient>()
                     .RuleFor(fake => fake.Amount, fake => fake.Random.Number())
-                    .RuleFor(fake => fake.RecipeId, fake => fake.Random.Number()));
+                    .RuleFor(fake => fake.RecipeId, 2));
                 context.Ingredients.Add(new AutoFaker<Ingredient>()
                     .RuleFor(fake => fake.Amount, fake => fake.Random.Number())
-                    .RuleFor(fake => fake.RecipeId, fake => fake.Random.Number()));
+                    .RuleFor(fake => fake.RecipeId, 2));
                 context.Ingredients.Add(new AutoFaker<Ingredient>()
                     .RuleFor(fake => fake.Amount, fake => fake.Random.Number())
-                    .RuleFor(fake => fake.RecipeId, fake => fake.Random.Number()));
+                    .RuleFor(fake => fake.RecipeId, 2));
 
                 context.SaveChanges();
             }
