@@ -19,6 +19,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonKitchen.Recipes.Api.M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonKitchen.Recipes.Api.Tests", "Recipes\CarbonKitchen.Recipes.Api\CarbonKitchen.Recipes.Api.Tests\CarbonKitchen.Recipes.Api.Tests.csproj", "{2182D9F6-321C-4D3B-9EC1-37CE90C4ADE0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ShoppingList", "ShoppingList", "{849F4818-A3B1-496B-A8CB-7684BD6F8526}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonKitchen.ShoppingListItems.Api", "ShoppingList\CarbonKitchen.ShoppingListItems.Api\CarbonKitchen.ShoppingListItems.Api.csproj", "{FAEEDCEC-2BF3-49ED-B93E-0CFDE0DC97AE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonKitchen.ShoppingListItems.Api.Models", "ShoppingList\CarbonKitchen.ShoppingListItems.Api.Models\CarbonKitchen.ShoppingListItems.Api.Models.csproj", "{F4483B99-8B03-4FC2-A16F-1F54200A2AA6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonKitchen.ShoppingListItems.Api.Tests", "ShoppingList\CarbonKitchen.ShoppingListItems.Api.Tests\CarbonKitchen.ShoppingListItems.Api.Tests.csproj", "{BB90A763-285A-4A73-B936-ADC89ABB3B3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +57,18 @@ Global
 		{2182D9F6-321C-4D3B-9EC1-37CE90C4ADE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2182D9F6-321C-4D3B-9EC1-37CE90C4ADE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2182D9F6-321C-4D3B-9EC1-37CE90C4ADE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAEEDCEC-2BF3-49ED-B93E-0CFDE0DC97AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAEEDCEC-2BF3-49ED-B93E-0CFDE0DC97AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAEEDCEC-2BF3-49ED-B93E-0CFDE0DC97AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAEEDCEC-2BF3-49ED-B93E-0CFDE0DC97AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4483B99-8B03-4FC2-A16F-1F54200A2AA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4483B99-8B03-4FC2-A16F-1F54200A2AA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4483B99-8B03-4FC2-A16F-1F54200A2AA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4483B99-8B03-4FC2-A16F-1F54200A2AA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB90A763-285A-4A73-B936-ADC89ABB3B3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB90A763-285A-4A73-B936-ADC89ABB3B3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB90A763-285A-4A73-B936-ADC89ABB3B3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB90A763-285A-4A73-B936-ADC89ABB3B3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +80,9 @@ Global
 		{EF12544E-049E-41F7-BFE4-114A5B2EDAA9} = {297BA3D7-9AD0-44E9-9527-A92E33B5F0CB}
 		{200EF581-6F7A-4C17-8218-8B100DE39791} = {297BA3D7-9AD0-44E9-9527-A92E33B5F0CB}
 		{2182D9F6-321C-4D3B-9EC1-37CE90C4ADE0} = {297BA3D7-9AD0-44E9-9527-A92E33B5F0CB}
+		{FAEEDCEC-2BF3-49ED-B93E-0CFDE0DC97AE} = {849F4818-A3B1-496B-A8CB-7684BD6F8526}
+		{F4483B99-8B03-4FC2-A16F-1F54200A2AA6} = {849F4818-A3B1-496B-A8CB-7684BD6F8526}
+		{BB90A763-285A-4A73-B936-ADC89ABB3B3F} = {849F4818-A3B1-496B-A8CB-7684BD6F8526}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {015EFD77-4377-4346-9244-21808B61501C}
