@@ -100,12 +100,15 @@ namespace CarbonKitchen.ShoppingListItems.Api
                 // auto generate some fake data. added rules to accomodate placeholder validation rules
                 context.ShoppingListItems.Add(new AutoFaker<ShoppingListItem>()
                     .RuleFor(fake => fake.ShoppingListId, 10)
+                    .RuleFor(fake => fake.Category, "Produce")
                     .RuleFor(fake => fake.Amount, fake => fake.Random.Number()));
                 context.ShoppingListItems.Add(new AutoFaker<ShoppingListItem>()
                     .RuleFor(fake => fake.ShoppingListId, 10)
+                    .RuleFor(fake => fake.Category, "Produce")
                     .RuleFor(fake => fake.Amount, fake => fake.Random.Number()));
                 context.ShoppingListItems.Add(new AutoFaker<ShoppingListItem>()
                     .RuleFor(fake => fake.ShoppingListId, 2)
+                    .RuleFor(fake => fake.Category, "Meat")
                     .RuleFor(fake => fake.Amount, fake => fake.Random.Number()));
 
                 context.SaveChanges();

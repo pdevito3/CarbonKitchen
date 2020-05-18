@@ -22,6 +22,10 @@
         [Sieve(CanFilter = true, CanSort = true)]
         public string Name { get; set; }
 
+        [Column("Category")]
+        [Sieve(CanFilter = true, CanSort = true)]
+        public string Category { get; set; }
+
         [Column("Acquired")]
         [Sieve(CanFilter = true, CanSort = true)]
         public bool? Acquired { get; set; }

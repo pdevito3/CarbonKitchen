@@ -6,6 +6,7 @@
     {
         public int? Amount { get; set; }
         public string Name { get; set; }
+        public string Category { get; set; }
         public int? ShoppingListId { get; set; }
         public bool? Acquired { get; set; }
         public bool? Hidden { get; set; }
