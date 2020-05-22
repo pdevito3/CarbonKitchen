@@ -40,12 +40,13 @@
             {
                 context.ShoppingListItems.Count().Should().Be(1);
 
-                var shoppingListItemsById = context.ShoppingListItems.FirstOrDefault(sli => sli.ShoppingListItemId == fakeShoppingListItem.ShoppingListItemId);
+                var shoppingListItemById = context.ShoppingListItems.FirstOrDefault(sli => sli.ShoppingListItemId == fakeShoppingListItem.ShoppingListItemId);
 
-                shoppingListItemsById.Should().BeEquivalentTo(fakeShoppingListItem);
-                shoppingListItemsById.ShoppingListItemId.Should().Be(fakeShoppingListItem.ShoppingListItemId);
-                shoppingListItemsById.Name.Should().Be(fakeShoppingListItem.Name);
-                shoppingListItemsById.ShoppingListId.Should().Be(fakeShoppingListItem.ShoppingListId);
+                shoppingListItemById.Should().BeEquivalentTo(fakeShoppingListItem);
+                shoppingListItemById.ShoppingListItemId.Should().Be(fakeShoppingListItem.ShoppingListItemId);
+                shoppingListItemById.Name.Should().Be(fakeShoppingListItem.Name);
+                shoppingListItemById.Category.Should().Be(fakeShoppingListItem.Category);
+                shoppingListItemById.ShoppingListItemDateField1.Should().Be(fakeShoppingListItem.ShoppingListItemDateField1);
             }
         }
     }

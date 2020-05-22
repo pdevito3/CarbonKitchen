@@ -26,13 +26,17 @@
         [Sieve(CanFilter = true, CanSort = true)]
         public string Category { get; set; }
 
+        [Column("Unit")]
+        [Sieve(CanFilter = true, CanSort = true)]
+        public string Unit { get; set; }
+
         [Column("Acquired")]
         [Sieve(CanFilter = true, CanSort = true)]
-        public bool? Acquired { get; set; }
+        public bool? Acquired { get; set; } = false;
 
         [Column("Hidden")]
         [Sieve(CanFilter = true, CanSort = true)]
-        public bool? Hidden { get; set; }
+        public bool? Hidden { get; set; } = false;
 
         [Column("ShoppingListId")]
         [Sieve(CanFilter = true, CanSort = true)]

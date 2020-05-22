@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Text.Json;
-    using CarbonKitchen.ShoppingListItems.Api.Mediator.Commands;
-    using CarbonKitchen.ShoppingListItems.Api.Mediator.Queries;
+    using AutoMapper;
+    using CarbonKitchen.ShoppingListItems.Api.Data.Entities;
     using CarbonKitchen.ShoppingListItems.Api.Models;
     using CarbonKitchen.ShoppingListItems.Api.Models.Pagination;
-    using MediatR;
+    using CarbonKitchen.ShoppingListItems.Api.Services;
     using Microsoft.AspNetCore.JsonPatch;
     using Microsoft.AspNetCore.Mvc;
 
@@ -15,69 +15,185 @@
     [Route("api/v1/shoppinglistitems")]
     public class ShoppingListItemsController : Controller
     {
-        private readonly IMediator _mediator;
+        private readonly IShoppingListItemRepository _shoppingListItemRepository;
+        private readonly IMapper _mapper;
 
-        public ShoppingListItemsController(IMediator mediator)
+        public ShoppingListItemsController(IShoppingListItemRepository shoppingListItemRepository
+            , IMapper mapper)
         {
-            _mediator = mediator ??
-                throw new ArgumentNullException(nameof(mediator));
+            _shoppingListItemRepository = shoppingListItemRepository ??
+                throw new ArgumentNullException(nameof(shoppingListItemRepository));
+            _mapper = mapper ??
+                throw new ArgumentNullException(nameof(mapper));
         }
+
 
         [HttpGet(Name = "GetShoppingListItems")]
-        public IActionResult GetShoppingListItems([FromQuery] ShoppingListItemParametersDto shoppingListItemsParametersDto)
+        public ActionResult<IEnumerable<ShoppingListItemDto>> GetCategories([FromQuery] ShoppingListItemParametersDto shoppingListItemParametersDto)
         {
-            var query = new GetAllShoppingListItemsQuery(shoppingListItemsParametersDto, this);
-            var result = _mediator.Send(query);
+            var shoppingListItemsFromRepo = _shoppingListItemRepository.GetShoppingListItems(shoppingListItemParametersDto);
+            
+            var previousPageLink = shoppingListItemsFromRepo.HasPrevious
+                    ? CreateShoppingListItemsResourceUri(shoppingListItemParametersDto,
+                        ResourceUriType.PreviousPage)
+                    : null;
+
+            var nextPageLink = shoppingListItemsFromRepo.HasNext
+                ? CreateShoppingListItemsResourceUri(shoppingListItemParametersDto,
+                    ResourceUriType.NextPage)
+                : null;
+
+            var paginationMetadata = new
+            {
+                totalCount = shoppingListItemsFromRepo.TotalCount,
+                pageSize = shoppingListItemsFromRepo.PageSize,
+                pageNumber = shoppingListItemsFromRepo.PageNumber,
+                totalPages = shoppingListItemsFromRepo.TotalPages,
+                hasPrevious = shoppingListItemsFromRepo.HasPrevious,
+                hasNext = shoppingListItemsFromRepo.HasNext,
+                previousPageLink,
+                nextPageLink
+            };
 
             Response.Headers.Add("X-Pagination",
-                JsonSerializer.Serialize(result.Result.PaginationMetadata));
+                JsonSerializer.Serialize(paginationMetadata));
 
-            return Ok(result.Result.ShoppingListItemDtoList);
+            var shoppingListItemsDto = _mapper.Map<IEnumerable<ShoppingListItemDto>>(shoppingListItemsFromRepo);
+            return Ok(shoppingListItemsDto);
         }
 
-        [HttpGet("{shoppingListItemsId}", Name = "GetShoppingListItem")]
-        public IActionResult GetShoppingListItem(int shoppingListItemsId)
-        {
-            var query = new GetShoppingListItemQuery(shoppingListItemsId);
-            var result = _mediator.Send(query);
 
-            return result.Result != null ? (IActionResult) Ok(result.Result) : NotFound();
+        [HttpGet("{shoppingListItemId}", Name = "GetShoppingListItem")]
+        public ActionResult<ShoppingListItemDto> GetShoppingListItem(int shoppingListItemId)
+        {
+            var shoppingListItemFromRepo = _shoppingListItemRepository.GetShoppingListItem(shoppingListItemId);
+
+            if (shoppingListItemFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            var shoppingListItemDto = _mapper.Map<ShoppingListItemDto>(shoppingListItemFromRepo);
+
+            return Ok(shoppingListItemDto);
         }
 
         [HttpPost]
-        public ActionResult<ShoppingListItemDto> AddShoppingListItem(CreateShoppingListItemCommand command)
+        public ActionResult<ShoppingListItemDto> AddShoppingListItem(ShoppingListItemForCreationDto shoppingListItemForCreation)
         {
-            var result = _mediator.Send(command);
+            var shoppingListItem = _mapper.Map<ShoppingListItem>(shoppingListItemForCreation);
+            _shoppingListItemRepository.AddShoppingListItem(shoppingListItem);
+            _shoppingListItemRepository.Save();
+
+            var shoppingListItemDto = _mapper.Map<ShoppingListItemDto>(shoppingListItem);
             return CreatedAtRoute("GetShoppingListItem",
-                new { result.Result.ShoppingListItemId },
-                result.Result);
+                new { shoppingListItemDto.ShoppingListItemId },
+                shoppingListItemDto);
         }
 
-        [HttpDelete("{shoppingListItemsId}")]
-        public IActionResult DeleteShoppingListItem(int shoppingListItemsId)
+        [HttpDelete("{shoppingListItemId}")]
+        public ActionResult DeleteShoppingListItem(int shoppingListItemId)
         {
-            var query = new DeleteShoppingListItemCommand(shoppingListItemsId);
-            var result = _mediator.Send(query);
+            var shoppingListItemFromRepo = _shoppingListItemRepository.GetShoppingListItem(shoppingListItemId);
 
-            return result.Result ? (IActionResult)NoContent() : NotFound();
+            if (shoppingListItemFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            _shoppingListItemRepository.DeleteShoppingListItem(shoppingListItemFromRepo);
+            _shoppingListItemRepository.Save();
+
+            return NoContent();
         }
 
-        [HttpPut("{shoppingListItemsId}")]
-        public IActionResult UpdateShoppingListItem(int shoppingListItemsId, ShoppingListItemForUpdateDto shoppingListItems)
+        [HttpPut("{shoppingListItemId}")]
+        public IActionResult UpdateShoppingListItem(int shoppingListItemId, ShoppingListItemForUpdateDto shoppingListItem)
         {
-            var query = new UpdateEntireShoppingListItemCommand(shoppingListItemsId, shoppingListItems);
-            var result = _mediator.Send(query);
+            var shoppingListItemFromRepo = _shoppingListItemRepository.GetShoppingListItem(shoppingListItemId);
 
-            return result.Result.ToUpper() == "NOCONTENT" ? (IActionResult)NoContent() : NotFound();
+            if (shoppingListItemFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(shoppingListItem, shoppingListItemFromRepo);
+            _shoppingListItemRepository.UpdateShoppingListItem(shoppingListItemFromRepo);
+
+            _shoppingListItemRepository.Save();
+
+            return NoContent();
         }
 
-        [HttpPatch("{shoppingListItemsId}")]
-        public IActionResult PartiallyUpdateShoppingListItem(int shoppingListItemsId, JsonPatchDocument<ShoppingListItemForUpdateDto> patchDoc)
+        [HttpPatch("{shoppingListItemId}")]
+        public IActionResult PartiallyUpdateShoppingListItem(int shoppingListItemId, JsonPatchDocument<ShoppingListItemForUpdateDto> patchDoc)
         {
-            var query = new UpdatePartialShoppingListItemCommand(shoppingListItemsId, patchDoc, this);
-            var result = _mediator.Send(query);
+            if (patchDoc == null)
+            {
+                return BadRequest();
+            }
 
-            return result.Result;
+            var existingShoppingListItem = _shoppingListItemRepository.GetShoppingListItem(shoppingListItemId);
+
+            if (existingShoppingListItem == null)
+            {
+                return NotFound();
+            }
+
+            var shoppingListItemToPatch = _mapper.Map<ShoppingListItemForUpdateDto>(existingShoppingListItem); // map the shoppingListItem we got from the database to an updatable shoppingListItem model
+            patchDoc.ApplyTo(shoppingListItemToPatch, ModelState); // apply patchdoc updates to the updatable shoppingListItem
+
+            if (!TryValidateModel(shoppingListItemToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(shoppingListItemToPatch, existingShoppingListItem); // apply updates from the updatable shoppingListItem to the db entity so we can apply the updates to the database
+            _shoppingListItemRepository.UpdateShoppingListItem(existingShoppingListItem); // apply business updates to data if needed
+
+            _shoppingListItemRepository.Save(); // save changes in the database
+
+            return NoContent();
+        }
+
+        private string CreateShoppingListItemsResourceUri(
+            ShoppingListItemParametersDto shoppingListItemParametersDto,
+            ResourceUriType type)
+        {
+            switch (type)
+            {
+                case ResourceUriType.PreviousPage:
+                    return Url.Link("GetShoppingListItems",
+                        new
+                        {
+                            filters = shoppingListItemParametersDto.Filters,
+                            orderBy = shoppingListItemParametersDto.SortOrder,
+                            pageNumber = shoppingListItemParametersDto.PageNumber - 1,
+                            pageSize = shoppingListItemParametersDto.PageSize,
+                            searchQuery = shoppingListItemParametersDto.QueryString
+                        });
+                case ResourceUriType.NextPage:
+                    return Url.Link("GetShoppingListItems",
+                        new
+                        {
+                            filters = shoppingListItemParametersDto.Filters,
+                            orderBy = shoppingListItemParametersDto.SortOrder,
+                            pageNumber = shoppingListItemParametersDto.PageNumber + 1,
+                            pageSize = shoppingListItemParametersDto.PageSize,
+                            searchQuery = shoppingListItemParametersDto.QueryString
+                        });
+
+                default:
+                    return Url.Link("GetShoppingListItems",
+                        new
+                        {
+                            filters = shoppingListItemParametersDto.Filters,
+                            orderBy = shoppingListItemParametersDto.SortOrder,
+                            pageNumber = shoppingListItemParametersDto.PageNumber,
+                            pageSize = shoppingListItemParametersDto.PageSize,
+                            searchQuery = shoppingListItemParametersDto.QueryString
+                        });
+            }
         }
     }
 }

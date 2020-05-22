@@ -11,8 +11,7 @@
             //createmap<to this, from this>
             CreateMap<ShoppingListItem, ShoppingListItemDto>()
                 .ReverseMap();
-            CreateMap<ShoppingListItemForCreationDto, ShoppingListItem>()
-                .ReverseMap();
+            CreateMap<ShoppingListItemForCreationDto, ShoppingListItem>();
             CreateMap<ShoppingListItemForUpdateDto, ShoppingListItem>()
                 .ReverseMap();
         }

@@ -40,15 +40,15 @@
                 context.SaveChanges();
 
                 //Assert
-                var shoppingListItemsList = context.ShoppingListItems.ToList();
+                var shoppingListItemList = context.ShoppingListItems.ToList();
 
-                shoppingListItemsList.Should()
+                shoppingListItemList.Should()
                     .NotBeEmpty()
                     .And.HaveCount(2);
 
-                shoppingListItemsList.Should().ContainEquivalentOf(fakeShoppingListItemOne);
-                shoppingListItemsList.Should().ContainEquivalentOf(fakeShoppingListItemThree);
-                Assert.DoesNotContain(shoppingListItemsList, sli => sli == fakeShoppingListItemTwo);
+                shoppingListItemList.Should().ContainEquivalentOf(fakeShoppingListItemOne);
+                shoppingListItemList.Should().ContainEquivalentOf(fakeShoppingListItemThree);
+                Assert.DoesNotContain(shoppingListItemList, sli => sli == fakeShoppingListItemTwo);
 
                 context.Database.EnsureDeleted();
             }

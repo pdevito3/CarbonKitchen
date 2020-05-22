@@ -2,10 +2,10 @@
 {
     public abstract class ShoppingListItemPaginationParameters
     {
-        const int maxPageSize = 20;
+        const int maxPageSize = 200;
         public int PageNumber { get; set; } = 1;
 
-        private int _pageSize = 10;
+        private int _pageSize = 200;
         public int PageSize
         {
             get

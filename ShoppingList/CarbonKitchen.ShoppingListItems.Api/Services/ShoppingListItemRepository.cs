@@ -26,65 +26,66 @@
                 throw new ArgumentNullException(nameof(sieveProcessor));
         }
 
-        public PagedList<ShoppingListItem> GetShoppingListItems(ShoppingListItemParametersDto shoppingListItemsParameters)
+        public PagedList<ShoppingListItem> GetShoppingListItems(ShoppingListItemParametersDto shoppingListItemParameters)
         {
-            if (shoppingListItemsParameters == null)
+            if (shoppingListItemParameters == null)
             {
-                throw new ArgumentNullException(nameof(shoppingListItemsParameters));
+                throw new ArgumentNullException(nameof(shoppingListItemParameters));
             }
 
             var collection = _context.ShoppingListItems as IQueryable<ShoppingListItem>;
 
-            if (!string.IsNullOrWhiteSpace(shoppingListItemsParameters.QueryString))
+            if (!string.IsNullOrWhiteSpace(shoppingListItemParameters.QueryString))
             {
-                var QueryString = shoppingListItemsParameters.QueryString.Trim();
-                collection = collection.Where(sli => sli.Name.Contains(QueryString));
+                var QueryString = shoppingListItemParameters.QueryString.Trim();
+                collection = collection.Where(sli => sli.Name.Contains(QueryString)
+                    || sli.Category.Contains(QueryString));
             }
 
             var sieveModel = new SieveModel
             {
-                Sorts = shoppingListItemsParameters.SortOrder,
-                Filters = shoppingListItemsParameters.Filters
+                Sorts = shoppingListItemParameters.SortOrder,
+                Filters = shoppingListItemParameters.Filters
             };
 
             collection = _sieveProcessor.Apply(sieveModel, collection);
 
             return PagedList<ShoppingListItem>.Create(collection,
-                shoppingListItemsParameters.PageNumber,
-                shoppingListItemsParameters.PageSize);
+                shoppingListItemParameters.PageNumber,
+                shoppingListItemParameters.PageSize);
         }
 
-        public async Task<ShoppingListItem> GetShoppingListItemAsync(int shoppingListItemsId)
+        public async Task<ShoppingListItem> GetShoppingListItemAsync(int shoppingListItemId)
         {
-            return await _context.ShoppingListItems.FirstOrDefaultAsync(sli => sli.ShoppingListItemId == shoppingListItemsId);
+            return await _context.ShoppingListItems.FirstOrDefaultAsync(sli => sli.ShoppingListItemId == shoppingListItemId);
         }
 
-        public ShoppingListItem GetShoppingListItem(int shoppingListItemsId)
+        public ShoppingListItem GetShoppingListItem(int shoppingListItemId)
         {
-            return _context.ShoppingListItems.FirstOrDefault(sli => sli.ShoppingListItemId == shoppingListItemsId);
+            return _context.ShoppingListItems.FirstOrDefault(sli => sli.ShoppingListItemId == shoppingListItemId);
         }
 
-        public void AddShoppingListItem(ShoppingListItem shoppingListItems)
+        public void AddShoppingListItem(ShoppingListItem shoppingListItem)
         {
-            if (shoppingListItems == null)
+            if (shoppingListItem == null)
             {
-                throw new ArgumentNullException(nameof(shoppingListItems));
+                throw new ArgumentNullException(nameof(shoppingListItem));
             }
 
-            _context.ShoppingListItems.Add(shoppingListItems);
+            _context.ShoppingListItems.Add(shoppingListItem);
         }
 
-        public void DeleteShoppingListItem(ShoppingListItem shoppingListItems)
+        public void DeleteShoppingListItem(ShoppingListItem shoppingListItem)
         {
-            if (shoppingListItems == null)
+            if (shoppingListItem == null)
             {
-                throw new ArgumentNullException(nameof(shoppingListItems));
+                throw new ArgumentNullException(nameof(shoppingListItem));
             }
 
-            _context.ShoppingListItems.Remove(shoppingListItems);
+            _context.ShoppingListItems.Remove(shoppingListItem);
         }
 
-        public void UpdateShoppingListItem(ShoppingListItem shoppingListItems)
+        public void UpdateShoppingListItem(ShoppingListItem shoppingListItem)
         {
             // no implementation for now
         }

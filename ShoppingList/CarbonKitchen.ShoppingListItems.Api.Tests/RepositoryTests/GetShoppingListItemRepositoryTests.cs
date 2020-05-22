@@ -35,11 +35,13 @@
                 var service = new ShoppingListItemRepository(context, new SieveProcessor(sieveOptions));
 
                 //Assert
-                var shoppingListItemsById = context.ShoppingListItems.FirstOrDefault(sli => sli.ShoppingListItemId == fakeShoppingListItem.ShoppingListItemId);
+                var shoppingListItemById = context.ShoppingListItems.FirstOrDefault(sli => sli.ShoppingListItemId == fakeShoppingListItem.ShoppingListItemId);
 
-                shoppingListItemsById.Should().BeEquivalentTo(fakeShoppingListItem);
-                shoppingListItemsById.ShoppingListItemId.Should().Be(fakeShoppingListItem.ShoppingListItemId);
-                shoppingListItemsById.Name.Should().Be(fakeShoppingListItem.Name);
+                shoppingListItemById.Should().BeEquivalentTo(fakeShoppingListItem);
+                shoppingListItemById.ShoppingListItemId.Should().Be(fakeShoppingListItem.ShoppingListItemId);
+                shoppingListItemById.Name.Should().Be(fakeShoppingListItem.Name);
+                shoppingListItemById.Category.Should().Be(fakeShoppingListItem.Category);
+                shoppingListItemById.ShoppingListItemDateField1.Should().Be(fakeShoppingListItem.ShoppingListItemDateField1);
             }
         }
 
@@ -64,16 +66,16 @@
 
                 var service = new ShoppingListItemRepository(context, new SieveProcessor(sieveOptions));
 
-                var shoppingListItemsRepo = service.GetShoppingListItems(new ShoppingListItemParametersDto());
+                var shoppingListItemRepo = service.GetShoppingListItems(new ShoppingListItemParametersDto());
 
                 //Assert
-                shoppingListItemsRepo.Should()
+                shoppingListItemRepo.Should()
                     .NotBeEmpty()
                     .And.HaveCount(3);
 
-                shoppingListItemsRepo.Should().ContainEquivalentOf(fakeShoppingListItemOne);
-                shoppingListItemsRepo.Should().ContainEquivalentOf(fakeShoppingListItemTwo);
-                shoppingListItemsRepo.Should().ContainEquivalentOf(fakeShoppingListItemThree);
+                shoppingListItemRepo.Should().ContainEquivalentOf(fakeShoppingListItemOne);
+                shoppingListItemRepo.Should().ContainEquivalentOf(fakeShoppingListItemTwo);
+                shoppingListItemRepo.Should().ContainEquivalentOf(fakeShoppingListItemThree);
 
                 context.Database.EnsureDeleted();
             }
@@ -100,15 +102,15 @@
 
                 var service = new ShoppingListItemRepository(context, new SieveProcessor(sieveOptions));
 
-                var shoppingListItemsRepo = service.GetShoppingListItems(new ShoppingListItemParametersDto { PageSize = 2 });
+                var shoppingListItemRepo = service.GetShoppingListItems(new ShoppingListItemParametersDto { PageSize = 2 });
 
                 //Assert
-                shoppingListItemsRepo.Should()
+                shoppingListItemRepo.Should()
                     .NotBeEmpty()
                     .And.HaveCount(2);
 
-                shoppingListItemsRepo.Should().ContainEquivalentOf(fakeShoppingListItemOne);
-                shoppingListItemsRepo.Should().ContainEquivalentOf(fakeShoppingListItemTwo);
+                shoppingListItemRepo.Should().ContainEquivalentOf(fakeShoppingListItemOne);
+                shoppingListItemRepo.Should().ContainEquivalentOf(fakeShoppingListItemTwo);
 
                 context.Database.EnsureDeleted();
             }
@@ -135,14 +137,14 @@
 
                 var service = new ShoppingListItemRepository(context, new SieveProcessor(sieveOptions));
 
-                var shoppingListItemsRepo = service.GetShoppingListItems(new ShoppingListItemParametersDto { PageSize = 1, PageNumber = 2 });
+                var shoppingListItemRepo = service.GetShoppingListItems(new ShoppingListItemParametersDto { PageSize = 1, PageNumber = 2 });
 
                 //Assert
-                shoppingListItemsRepo.Should()
+                shoppingListItemRepo.Should()
                     .NotBeEmpty()
                     .And.HaveCount(1);
 
-                shoppingListItemsRepo.Should().ContainEquivalentOf(fakeShoppingListItemTwo);
+                shoppingListItemRepo.Should().ContainEquivalentOf(fakeShoppingListItemTwo);
 
                 context.Database.EnsureDeleted();
             }
@@ -174,10 +176,10 @@
 
                 var service = new ShoppingListItemRepository(context, new SieveProcessor(sieveOptions));
 
-                var shoppingListItemsRepo = service.GetShoppingListItems(new ShoppingListItemParametersDto { SortOrder = "Name" });
+                var shoppingListItemRepo = service.GetShoppingListItems(new ShoppingListItemParametersDto { SortOrder = "Name" });
 
                 //Assert
-                shoppingListItemsRepo.Should()
+                shoppingListItemRepo.Should()
                     .ContainInOrder(fakeShoppingListItemTwo, fakeShoppingListItemOne, fakeShoppingListItemThree);
 
                 context.Database.EnsureDeleted();
@@ -210,10 +212,10 @@
 
                 var service = new ShoppingListItemRepository(context, new SieveProcessor(sieveOptions));
 
-                var shoppingListItemsRepo = service.GetShoppingListItems(new ShoppingListItemParametersDto { SortOrder = "-Name" });
+                var shoppingListItemRepo = service.GetShoppingListItems(new ShoppingListItemParametersDto { SortOrder = "-Name" });
 
                 //Assert
-                shoppingListItemsRepo.Should()
+                shoppingListItemRepo.Should()
                     .ContainInOrder(fakeShoppingListItemThree, fakeShoppingListItemOne, fakeShoppingListItemTwo);
 
                 context.Database.EnsureDeleted();
@@ -222,10 +224,13 @@
 
         [Theory]
         [InlineData("Name == Alpha")]
+        [InlineData("Category == Bravo")]
         [InlineData("Amount == 5")]
         [InlineData("Name == Charlie")]
+        [InlineData("Category == Delta")]
         [InlineData("Amount == 6")]
         [InlineData("Name == Echo")]
+        [InlineData("Category == Foxtrot")]
         [InlineData("Amount == 7")]
         public void GetShoppingListItems_FilterListWithExact(string filters)
         {
@@ -237,14 +242,17 @@
 
             var fakeShoppingListItemOne = new FakeShoppingListItem { }.Generate();
             fakeShoppingListItemOne.Name = "Alpha";
+            fakeShoppingListItemOne.Category = "Bravo";
             fakeShoppingListItemOne.Amount = 5;
 
             var fakeShoppingListItemTwo = new FakeShoppingListItem { }.Generate();
             fakeShoppingListItemTwo.Name = "Charlie";
+            fakeShoppingListItemTwo.Category = "Delta";
             fakeShoppingListItemTwo.Amount = 6;
 
             var fakeShoppingListItemThree = new FakeShoppingListItem { }.Generate();
             fakeShoppingListItemThree.Name = "Echo";
+            fakeShoppingListItemThree.Category = "Foxtrot";
             fakeShoppingListItemThree.Amount = 7;
 
             //Act
@@ -255,10 +263,10 @@
 
                 var service = new ShoppingListItemRepository(context, new SieveProcessor(sieveOptions));
 
-                var shoppingListItemsRepo = service.GetShoppingListItems(new ShoppingListItemParametersDto { Filters = filters });
+                var shoppingListItemRepo = service.GetShoppingListItems(new ShoppingListItemParametersDto { Filters = filters });
 
                 //Assert
-                shoppingListItemsRepo.Should()
+                shoppingListItemRepo.Should()
                     .HaveCount(1);
 
                 context.Database.EnsureDeleted();
@@ -267,7 +275,9 @@
 
         [Theory]
         [InlineData("Name@=Hart", 1)]
+        [InlineData("Category@=Fav", 1)]
         [InlineData("Name@=*hart", 2)]
+        [InlineData("Category@=*fav", 2)]
         public void GetShoppingListItems_FilterListWithContains(string filters, int expectedCount)
         {
             //Arrange
@@ -278,12 +288,15 @@
 
             var fakeShoppingListItemOne = new FakeShoppingListItem { }.Generate();
             fakeShoppingListItemOne.Name = "Alpha";
+            fakeShoppingListItemOne.Category = "Bravo";
 
             var fakeShoppingListItemTwo = new FakeShoppingListItem { }.Generate();
             fakeShoppingListItemTwo.Name = "Hartsfield";
+            fakeShoppingListItemTwo.Category = "Favaro";
 
             var fakeShoppingListItemThree = new FakeShoppingListItem { }.Generate();
             fakeShoppingListItemThree.Name = "Bravehart";
+            fakeShoppingListItemThree.Category = "Jonfav";
 
             //Act
             using (var context = new ShoppingListItemDbContext(dbOptions))
@@ -293,10 +306,10 @@
 
                 var service = new ShoppingListItemRepository(context, new SieveProcessor(sieveOptions));
 
-                var shoppingListItemsRepo = service.GetShoppingListItems(new ShoppingListItemParametersDto { Filters = filters });
+                var shoppingListItemRepo = service.GetShoppingListItems(new ShoppingListItemParametersDto { Filters = filters });
 
                 //Assert
-                shoppingListItemsRepo.Should()
+                shoppingListItemRepo.Should()
                     .HaveCount(expectedCount);
 
                 context.Database.EnsureDeleted();
@@ -317,12 +330,15 @@
 
             var fakeShoppingListItemOne = new FakeShoppingListItem { }.Generate();
             fakeShoppingListItemOne.Name = "Alpha";
+            fakeShoppingListItemOne.Category = "Bravo";
 
             var fakeShoppingListItemTwo = new FakeShoppingListItem { }.Generate();
             fakeShoppingListItemTwo.Name = "Hartsfield";
+            fakeShoppingListItemTwo.Category = "White";
 
             var fakeShoppingListItemThree = new FakeShoppingListItem { }.Generate();
             fakeShoppingListItemThree.Name = "Bravehart";
+            fakeShoppingListItemThree.Category = "Jonfav";
 
             //Act
             using (var context = new ShoppingListItemDbContext(dbOptions))
@@ -332,10 +348,10 @@
 
                 var service = new ShoppingListItemRepository(context, new SieveProcessor(sieveOptions));
 
-                var shoppingListItemsRepo = service.GetShoppingListItems(new ShoppingListItemParametersDto { QueryString = queryString });
+                var shoppingListItemRepo = service.GetShoppingListItems(new ShoppingListItemParametersDto { QueryString = queryString });
 
                 //Assert
-                shoppingListItemsRepo.Should()
+                shoppingListItemRepo.Should()
                     .HaveCount(expectedCount);
 
                 context.Database.EnsureDeleted();

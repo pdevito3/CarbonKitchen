@@ -10,12 +10,12 @@
 
     public interface IShoppingListItemRepository
     {
-        PagedList<ShoppingListItem> GetShoppingListItems(ShoppingListItemParametersDto shoppingListItemsParameters);
-        Task<ShoppingListItem> GetShoppingListItemAsync(int shoppingListItemsId);
-        ShoppingListItem GetShoppingListItem(int shoppingListItemsId);
-        void AddShoppingListItem(ShoppingListItem shoppingListItems);
-        void DeleteShoppingListItem(ShoppingListItem shoppingListItems);
-        void UpdateShoppingListItem(ShoppingListItem shoppingListItems);
+        PagedList<ShoppingListItem> GetShoppingListItems(ShoppingListItemParametersDto shoppingListItemParameters);
+        Task<ShoppingListItem> GetShoppingListItemAsync(int shoppingListItemId);
+        ShoppingListItem GetShoppingListItem(int shoppingListItemId);
+        void AddShoppingListItem(ShoppingListItem shoppingListItem);
+        void DeleteShoppingListItem(ShoppingListItem shoppingListItem);
+        void UpdateShoppingListItem(ShoppingListItem shoppingListItem);
         bool Save();
     }
 }

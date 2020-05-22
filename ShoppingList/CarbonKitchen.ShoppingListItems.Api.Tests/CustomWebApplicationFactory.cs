@@ -1,24 +1,23 @@
-﻿using CarbonKitchen.ShoppingListItems.Api.Controllers;
-using CarbonKitchen.ShoppingListItems.Api.Data;
+﻿using CarbonKitchen.ShoppingListItems.Api.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Xunit;
-[assembly: CollectionBehavior(DisableTestParallelization = true)]
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CarbonKitchen.ShoppingListItems.Api.Tests
 {
+
     public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder
-            .ConfigureAppConfiguration((context, b) => {
-                context.HostingEnvironment.ApplicationName = typeof(ShoppingListItemsController).Assembly.GetName().Name;
-            })
             .ConfigureServices(services =>
             {
                 // Remove the app's ShoppingListItemDbContext registration.
@@ -41,6 +40,7 @@ namespace CarbonKitchen.ShoppingListItems.Api.Tests
                 var sp = services.BuildServiceProvider();
 
                 // Create a scope to obtain a reference to the database
+                // context (ShoppingListItemDbContext).
                 using (var scope = sp.CreateScope())
                 {
                     var scopedServices = scope.ServiceProvider;
@@ -61,5 +61,55 @@ namespace CarbonKitchen.ShoppingListItems.Api.Tests
                 }
             });
         }
+
+        public HttpClient GetAnonymousClient()
+        {
+            return CreateClient();
+        }
+
+        //public async Task<HttpClient> GetAuthenticatedClientAsync()
+        //{
+        //    return await GetAuthenticatedClientAsync("jason@northwind", "Northwind1!");
+        //}
+
+        //public async Task<HttpClient> GetAuthenticatedClientAsync(string userName, string password)
+        //{
+        //    var client = CreateClient();
+
+        //    var token = await GetAccessTokenAsync(client, userName, password);
+
+        //    client.SetBearerToken(token);
+
+        //    return client;
+        //}
+
+        //    private async Task<string> GetAccessTokenAsync(HttpClient client, string userName, string password)
+        //    {
+        //        var disco = await client.GetDiscoveryDocumentAsync();
+
+        //        if (disco.IsError)
+        //        {
+        //            throw new Exception(disco.Error);
+        //        }
+
+        //        var response = await client.RequestPasswordTokenAsync(new PasswordTokenRequest
+        //        {
+        //            Address = disco.TokenEndpoint,
+        //            ClientId = "Northwind.IntegrationTests",
+        //            ClientSecret = "secret",
+
+        //            Scope = "Northwind.WebUIAPI openid profile",
+        //            UserName = userName,
+        //            Password = password
+        //        });
+
+        //        if (response.IsError)
+        //        {
+        //            throw new Exception(response.Error);
+        //        }
+
+        //        return response.AccessToken;
+        //    }
+        //}
     }
 }
