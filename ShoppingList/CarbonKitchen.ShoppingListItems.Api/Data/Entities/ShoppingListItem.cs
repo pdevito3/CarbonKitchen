@@ -16,7 +16,7 @@
 
         [Column("Amount")]
         [Sieve(CanFilter = true, CanSort = true)]
-        public int? Amount { get; set; }
+        public float? Amount { get; set; }
 
         [Column("Name")]
         [Sieve(CanFilter = true, CanSort = true)]
