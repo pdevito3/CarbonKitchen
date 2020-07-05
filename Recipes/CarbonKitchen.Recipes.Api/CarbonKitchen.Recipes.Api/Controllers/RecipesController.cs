@@ -8,10 +8,12 @@
     using CarbonKitchen.Recipes.Api.Models;
     using CarbonKitchen.Recipes.Api.Models.Pagination;
     using CarbonKitchen.Recipes.Api.Services;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.JsonPatch;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiController]
+    [Authorize]
     [Route("api/v1/recipes")]
     public class RecipesController : Controller
     {

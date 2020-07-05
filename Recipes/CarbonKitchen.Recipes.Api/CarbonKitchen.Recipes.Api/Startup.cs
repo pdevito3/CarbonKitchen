@@ -15,6 +15,9 @@ namespace CarbonKitchen.Recipes.Api
     using Microsoft.Extensions.Hosting;
     using Sieve.Services;
     using System;
+    using System.Text;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.IdentityModel.Tokens;
 
     public class Startup
     {
@@ -38,10 +41,32 @@ namespace CarbonKitchen.Recipes.Api
                     .AllowAnyHeader());
             });
 
+
+            var key = Encoding.ASCII.GetBytes("E546C8DF278CD5931069B522E695D4F2");
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<SieveProcessor>();
             
             services.AddScoped<IRecipeRepository, RecipeRepository>();
+            services.AddScoped<IAuthService, AuthService>();
 
             services.AddMvc()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
@@ -65,6 +90,8 @@ namespace CarbonKitchen.Recipes.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseAuthentication();
 
             app.UseCors(MyAllowSpecificOrigins);
 
